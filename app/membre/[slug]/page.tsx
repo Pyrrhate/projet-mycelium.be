@@ -10,6 +10,8 @@ import type { MemberProfile } from "@/types/sanity";
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const revalidate = 30;
+
 export async function generateStaticParams() {
   const client = getClient();
   if (!client) return [];

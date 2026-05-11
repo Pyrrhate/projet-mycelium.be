@@ -11,6 +11,8 @@ import type { MemberWithNodes } from "@/types/sanity";
 
 type Props = {
   members: MemberWithNodes[];
+  /** False si NEXT_PUBLIC_SANITY_PROJECT_ID (etc.) n’est pas défini côté serveur / build */
+  sanityConfigured: boolean;
 };
 
 function formatDate(iso: string) {
@@ -25,7 +27,7 @@ function formatDate(iso: string) {
   }
 }
 
-export function MemberNetwork({ members }: Props) {
+export function MemberNetwork({ members, sanityConfigured }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   if (members.length === 0) {
@@ -37,13 +39,44 @@ export function MemberNetwork({ members }: Props) {
         <div className="mx-auto max-w-5xl text-center">
           <Users className="mx-auto mb-4 h-10 w-10 text-[#064e3b]/40" aria-hidden />
           <h2 className="text-2xl font-semibold text-[#064e3b]">Le Réseau</h2>
-          <p className="mt-3 text-[#064e3b]/70">
-            Aucun membre pour l’instant. Configurez{" "}
-            <code className="rounded bg-[#064e3b]/10 px-1.5 py-0.5 text-sm">
-              .env.local
-            </code>{" "}
-            avec Sanity, puis ajoutez des membres depuis le Studio.
-          </p>
+          {!sanityConfigured ? (
+            <>
+              <p className="mt-3 text-[#064e3b]/70">
+                Sanity n’est pas configuré pour ce déploiement. Ajoutez{" "}
+                <code className="rounded bg-[#064e3b]/10 px-1.5 py-0.5 text-sm">
+                  NEXT_PUBLIC_SANITY_PROJECT_ID
+                </code>{" "}
+                et{" "}
+                <code className="rounded bg-[#064e3b]/10 px-1.5 py-0.5 text-sm">
+                  NEXT_PUBLIC_SANITY_DATASET
+                </code>{" "}
+                dans{" "}
+                <code className="rounded bg-[#064e3b]/10 px-1.5 py-0.5 text-sm">
+                  .env.local
+                </code>{" "}
+                (local) ou dans les variables d’environnement Vercel, puis
+                redéployez.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="mt-3 text-[#064e3b]/70">
+                Aucun membre n’apparaît sur l’API publique. Dans le Studio,
+                ouvrez le document et cliquez sur{" "}
+                <strong className="font-semibold text-[#064e3b]">Publier</strong>{" "}
+                — les brouillons ne sont pas visibles sur le site.
+              </p>
+              <p className="mt-3 text-sm text-[#064e3b]/60">
+                Vérifiez aussi que le dataset dans vos variables (
+                <code className="rounded bg-[#064e3b]/10 px-1 py-0.5">
+                  NEXT_PUBLIC_SANITY_DATASET
+                </code>
+                , souvent <code className="rounded bg-[#064e3b]/10 px-1 py-0.5">production</code>
+                ) est le même que dans le menu du Studio. Attendez quelques
+                secondes après publication (mise à jour du CDN Sanity).
+              </p>
+            </>
+          )}
           <Link
             href="/studio"
             className="mt-6 inline-block rounded-full bg-[#064e3b] px-5 py-2.5 text-sm font-medium text-[#f8fafc] transition hover:bg-[#065f46]"
