@@ -32,8 +32,9 @@ export default function RootLayout({
   return (
     <html lang="fr-BE">
       <body
-        className={`${syne.variable} ${dmSans.variable} font-sans antialiased`}
+        className={`${syne.variable} ${dmSans.variable} mycelium-canvas font-sans text-[color:var(--text-primary)] antialiased`}
       >
+        <div className="texture-noise" aria-hidden />
         {children}
       </body>
     </html>

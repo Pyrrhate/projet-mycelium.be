@@ -2,51 +2,52 @@ import { groq } from "next-sanity";
 
 const AUTHOR = "author->{ _id, name, bio, avatar }";
 
-export const homeArtworksQuery = groq`*[_type == "artwork"] | order(_createdAt desc)[0...12] {
-  _id,
-  title,
-  "slug": slug.current,
-  mainImage,
-  "mainVideoUrl": mainVideo.asset->url,
-  description,
-  ${AUTHOR}
-}`;
-
-export const homeWritingsQuery = groq`*[_type == "writing"] | order(_createdAt desc)[0...6] {
-  _id,
-  title,
-  "slug": slug.current,
-  heroIllustration,
-  "previewText": pt::text(content),
-  ${AUTHOR}
-}`;
-
-export const artworkSlugsQuery = groq`
-  *[_type == "artwork" && defined(slug.current)]{"slug": slug.current}
+/** 3 prochains événements à partir de maintenant */
+export const upcomingEventsQuery = groq`
+  *[_type == "event" && dateTime(date) >= dateTime(now())] | order(date asc)[0...3] {
+    _id,
+    title,
+    date,
+    location,
+    description,
+    coverImage
+  }
 `;
 
-export const writingSlugsQuery = groq`
-  *[_type == "writing" && defined(slug.current)]{"slug": slug.current}
+/** Flux chronologique inverse (récent en premier) */
+export const billetsFluxQuery = groq`
+  *[_type == "billet"] | order(publishedAt desc)[0...24] {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    content,
+    ${AUTHOR},
+    "previewText": pt::text(content),
+    "firstImage": content[_type == "bodyImage"][0]{
+      image,
+      alt,
+      caption
+    },
+    "firstVideo": content[_type == "bodyVideo"][0]{
+      url,
+      caption
+    },
+    "contentLength": count(content)
+  }
 `;
 
-export const artworkBySlugQuery = groq`*[_type == "artwork" && slug.current == $slug][0] {
-  _id,
-  title,
-  "slug": slug.current,
-  mainImage,
-  "mainVideoUrl": mainVideo.asset->url,
-  gallery,
-  description,
-  _createdAt,
-  ${AUTHOR}
-}`;
+export const billetSlugsQuery = groq`
+  *[_type == "billet" && defined(slug.current)]{"slug": slug.current}
+`;
 
-export const writingBySlugQuery = groq`*[_type == "writing" && slug.current == $slug][0] {
-  _id,
-  title,
-  "slug": slug.current,
-  heroIllustration,
-  content,
-  _createdAt,
-  ${AUTHOR}
-}`;
+export const billetBySlugQuery = groq`
+  *[_type == "billet" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    content,
+    ${AUTHOR}
+  }
+`;

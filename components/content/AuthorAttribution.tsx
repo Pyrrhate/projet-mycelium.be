@@ -21,12 +21,12 @@ export function AuthorAttribution({ author }: Props) {
 
   return (
     <>
-      <p className="text-sm text-[#064e3b]/65">
+      <p className="text-sm text-[color:var(--text-subtle)]">
         Une ramification nourrie par{" "}
         <button
           type="button"
           id={labelId}
-          className="border-b border-[#10b981]/40 font-medium text-[#064e3b] decoration-transparent transition hover:border-[#10b981] hover:text-[#10b981]"
+          className="border-b border-[color:var(--accent-mint)]/40 font-medium text-[color:var(--text-primary)] decoration-transparent transition hover:border-[color:var(--accent-spring)] hover:text-[color:var(--accent-spring)]"
           onClick={() => setOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={open}
@@ -42,7 +42,7 @@ export function AuthorAttribution({ author }: Props) {
             <motion.button
               type="button"
               aria-label="Fermer"
-              className="fixed inset-0 z-40 bg-[#064e3b]/40 backdrop-blur-[2px]"
+              className="fixed inset-0 z-40 bg-black/55 backdrop-blur-[3px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -51,7 +51,7 @@ export function AuthorAttribution({ author }: Props) {
             <motion.div
               role="dialog"
               aria-labelledby={labelId}
-              className="fixed left-1/2 top-1/2 z-50 w-[min(90vw,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-[#10b981]/25 bg-[#f8fafc] p-6 shadow-2xl shadow-[#064e3b]/15"
+              className="fixed left-1/2 top-1/2 z-50 w-[min(90vw,22rem)] -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/[0.12] bg-[color:var(--canvas-ink)]/92 p-6 shadow-2xl shadow-black/40 backdrop-blur-xl"
               initial={{ opacity: 0, scale: 0.94, y: "-48%" }}
               animate={{ opacity: 1, scale: 1, y: "-50%" }}
               exit={{ opacity: 0, scale: 0.96, y: "-48%" }}
@@ -64,28 +64,28 @@ export function AuthorAttribution({ author }: Props) {
                     alt=""
                     width={88}
                     height={88}
-                    className="h-[5.5rem] w-[5.5rem] rounded-full object-cover ring-2 ring-[#10b981]/30"
+                    className="h-[5.5rem] w-[5.5rem] rounded-full object-cover ring-2 ring-[color:var(--accent-mint)]/35"
                   />
                 ) : (
-                  <div className="flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full bg-[#064e3b]/10 text-xl font-semibold text-[#064e3b]/70">
+                  <div className="flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full bg-white/[0.06] text-xl font-semibold text-[color:var(--text-muted)]">
                     {author.name.slice(0, 1).toUpperCase()}
                   </div>
                 )}
-                <p className="mt-4 font-display text-lg font-semibold text-[#064e3b]">
+                <p className="mt-4 font-display text-lg font-semibold text-[color:var(--text-primary)]">
                   {author.name}
                 </p>
                 {author.bio ? (
-                  <p className="mt-3 text-sm leading-relaxed text-[#064e3b]/75">
+                  <p className="mt-3 text-sm leading-relaxed text-[color:var(--text-muted)]">
                     {author.bio}
                   </p>
                 ) : (
-                  <p className="mt-3 text-sm italic text-[#064e3b]/45">
+                  <p className="mt-3 text-sm italic text-[color:var(--text-subtle)]">
                     Membre du collectif.
                   </p>
                 )}
                 <button
                   type="button"
-                  className="mt-5 text-xs font-medium uppercase tracking-wider text-[#10b981] hover:underline"
+                  className="mt-5 text-xs font-medium uppercase tracking-wider text-[color:var(--accent-mint)] hover:underline"
                   onClick={() => setOpen(false)}
                 >
                   Fermer

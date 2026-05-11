@@ -13,5 +13,7 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <div className="relative z-20 min-h-screen bg-[#101112]">{children}</div>
+  );
 }

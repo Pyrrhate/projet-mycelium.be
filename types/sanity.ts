@@ -14,36 +14,65 @@ export type MemberAuthor = {
   avatar?: SanityImageAsset;
 };
 
-export type ArtworkCard = {
+export type EventCard = {
   _id: string;
   title: string;
+  date: string;
+  location: string;
+  description?: PortableTextBlock[];
+  coverImage?: SanityImageAsset;
+};
+
+/** Bloc hybride dans un billet */
+export type BilletBodyImage = {
+  _type: "bodyImage";
+  _key?: string;
+  image: SanityImageAsset;
+  alt?: string;
+  caption?: string;
+};
+
+export type BilletBodyVideo = {
+  _type: "bodyVideo";
+  _key?: string;
+  url: string;
+  caption?: string;
+};
+
+export type BilletContentItem =
+  | PortableTextBlock
+  | BilletBodyImage
+  | BilletBodyVideo;
+
+export type FluxVariant =
+  | "image-hero"
+  | "video-hero"
+  | "image-featured"
+  | "text-long"
+  | "mixed";
+
+export type BilletFluxItem = {
+  _id: string;
+  title: string | null;
   slug: string;
-  mainImage?: SanityImageAsset;
-  mainVideoUrl?: string | null;
-  description?: string;
+  publishedAt: string;
+  content?: BilletContentItem[];
   author?: MemberAuthor | null;
-};
-
-export type ArtworkDetail = ArtworkCard & {
-  gallery?: SanityImageAsset[];
-  _createdAt?: string;
-};
-
-export type WritingCard = {
-  _id: string;
-  title: string;
-  slug: string;
-  heroIllustration?: SanityImageAsset;
   previewText?: string | null;
-  author?: MemberAuthor | null;
+  firstImage?: {
+    image: SanityImageAsset;
+    alt?: string;
+    caption?: string;
+  } | null;
+  firstVideo?: { url: string; caption?: string } | null;
+  contentLength?: number;
 };
 
-export type WritingDetail = {
+export type BilletDetail = {
   _id: string;
-  title: string;
+  title: string | null;
   slug: string;
-  heroIllustration?: SanityImageAsset;
-  content?: PortableTextBlock[];
-  _createdAt?: string;
+  publishedAt: string;
+  content?: BilletContentItem[];
   author?: MemberAuthor | null;
 };

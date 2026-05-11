@@ -15,7 +15,13 @@ export function middleware(request: NextRequest) {
   }
 
   const header = request.headers.get("authorization");
-  const expected = `Basic ${btoa(`${user}:${pass}`)}`;
+  let expected: string;
+  try {
+    expected = `Basic ${btoa(`${user}:${pass}`)}`;
+  } catch {
+    // Mot de passe non ASCII / btoa impossible — ne pas planter le middleware
+    return NextResponse.next();
+  }
 
   if (header === expected) {
     return NextResponse.next();

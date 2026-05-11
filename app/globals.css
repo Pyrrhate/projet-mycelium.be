@@ -1,22 +1,69 @@
 @import "tailwindcss";
 
+/* Toile continue : sous-bois / terre — profondeur sans blocs plats */
 :root {
-  --background: #f8fafc;
-  --foreground: #064e3b;
-  --glow: #10b981;
-  --moss: #064e3b;
+  --canvas-deep: #060908;
+  --canvas-ink: #0a100e;
+  --text-primary: #eef4f0;
+  --text-muted: #c5d4cc;
+  --text-subtle: #8fa89a;
+  --accent-mint: #9ed9be;
+  --accent-spring: #6ee7b7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--canvas-deep);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
+body.mycelium-canvas {
+  position: relative;
+  min-height: 100svh;
+  color: var(--text-primary);
+  background-color: var(--canvas-deep);
+  background-image:
+    radial-gradient(
+      ellipse 130% 85% at 15% -10%,
+      rgba(34, 94, 72, 0.22) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 100% 70% at 88% 15%,
+      rgba(28, 48, 52, 0.35) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      ellipse 80% 55% at 50% 110%,
+      rgba(6, 22, 18, 0.55) 0%,
+      transparent 48%
+    ),
+    radial-gradient(circle at 40% 60%, rgba(16, 42, 36, 0.2) 0%, transparent 42%),
+    linear-gradient(
+      168deg,
+      #030605 0%,
+      var(--canvas-ink) 38%,
+      #0c1512 72%,
+      #070a09 100%
+    );
+  background-attachment: fixed;
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/**
+ * Grain tactile très léger — superposition fixe sous le contenu (z-1).
+ * Réutilisable via la classe .texture-noise.
+ */
+.texture-noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
 }
 
 h1,

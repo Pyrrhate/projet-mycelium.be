@@ -1,5 +1,5 @@
-import { artworkType } from "./artwork";
+import { billetType } from "../schemas/billet";
+import { eventType } from "../schemas/event";
 import { memberType } from "./member";
-import { writingType } from "./writing";
 
-export const schemaTypes = [memberType, artworkType, writingType];
+export const schemaTypes = [memberType, eventType, billetType];

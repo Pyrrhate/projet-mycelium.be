@@ -1,32 +1,41 @@
-import { EcritsTeasers } from "@/components/exposition/EcritsTeasers";
-import { RealisationsMasonry } from "@/components/exposition/RealisationsMasonry";
+import { AgendaSection } from "@/components/home/AgendaSection";
+import { BilletsFlux } from "@/components/home/BilletsFlux";
 import { InformelHero } from "@/components/home/InformelHero";
 import { getClient } from "@/lib/sanity/client";
 import {
-  homeArtworksQuery,
-  homeWritingsQuery,
+  billetsFluxQuery,
+  upcomingEventsQuery,
 } from "@/lib/sanity/queries";
-import type { ArtworkCard, WritingCard } from "@/types/sanity";
+import type { BilletFluxItem, EventCard } from "@/types/sanity";
 
 export const revalidate = 30;
 
 export default async function Home() {
+  let events: EventCard[] = [];
+  let billets: BilletFluxItem[] = [];
+
   const client = getClient();
-  const artworks: ArtworkCard[] = client
-    ? await client.fetch(homeArtworksQuery)
-    : [];
-  const writings: WritingCard[] = client
-    ? await client.fetch(homeWritingsQuery)
-    : [];
+  if (client) {
+    try {
+      events = await client.fetch(upcomingEventsQuery);
+    } catch {
+      events = [];
+    }
+    try {
+      billets = await client.fetch(billetsFluxQuery);
+    } catch {
+      billets = [];
+    }
+  }
 
   return (
-    <>
+    <main className="relative z-10 flex min-h-screen flex-col">
       <InformelHero />
-      <RealisationsMasonry artworks={artworks} />
-      <EcritsTeasers writings={writings} />
-      <footer className="border-t border-[#064e3b]/10 bg-[#064e3b] px-6 py-10 text-center text-sm text-[#f8fafc]/70 md:px-10">
-        <p>Projet Mycélium — exposition collective.</p>
+      <AgendaSection events={events} />
+      <BilletsFlux billets={billets} />
+      <footer className="px-8 py-16 text-center text-sm text-[color:var(--text-subtle)] md:px-14 md:py-20">
+        <p>Projet Mycélium — collectif & vitrine.</p>
       </footer>
-    </>
+    </main>
   );
 }
