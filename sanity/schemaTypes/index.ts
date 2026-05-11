@@ -1,4 +1,5 @@
+import { artworkType } from "./artwork";
 import { memberType } from "./member";
-import { nodeContentType } from "./nodeContent";
+import { writingType } from "./writing";
 
-export const schemaTypes = [memberType, nodeContentType];
+export const schemaTypes = [memberType, artworkType, writingType];

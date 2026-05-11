@@ -7,42 +7,43 @@ export type SanityImageAsset = {
   crop?: { top: number; bottom: number; left: number; right: number };
 };
 
-export type MemberLink = {
-  _key?: string;
-  label?: string;
-  url?: string;
-};
-
-export type MemberWithNodes = {
+export type MemberAuthor = {
   _id: string;
   name: string;
-  slug: string;
-  email?: string;
   bio?: string;
   avatar?: SanityImageAsset;
-  links?: MemberLink[];
-  recentNodes?: {
-    _id: string;
-    title: string;
-    _updatedAt: string;
-    tags?: string[];
-  }[];
 };
 
-export type MemberProfile = {
+export type ArtworkCard = {
   _id: string;
-  name: string;
+  title: string;
   slug: string;
-  email?: string;
-  bio?: string;
-  avatar?: SanityImageAsset;
-  links?: MemberLink[];
-  nodes?: {
-    _id: string;
-    title: string;
-    content?: PortableTextBlock[];
-    mainImage?: SanityImageAsset;
-    tags?: string[];
-    _updatedAt: string;
-  }[];
+  mainImage?: SanityImageAsset;
+  mainVideoUrl?: string | null;
+  description?: string;
+  author?: MemberAuthor | null;
+};
+
+export type ArtworkDetail = ArtworkCard & {
+  gallery?: SanityImageAsset[];
+  _createdAt?: string;
+};
+
+export type WritingCard = {
+  _id: string;
+  title: string;
+  slug: string;
+  heroIllustration?: SanityImageAsset;
+  previewText?: string | null;
+  author?: MemberAuthor | null;
+};
+
+export type WritingDetail = {
+  _id: string;
+  title: string;
+  slug: string;
+  heroIllustration?: SanityImageAsset;
+  content?: PortableTextBlock[];
+  _createdAt?: string;
+  author?: MemberAuthor | null;
 };

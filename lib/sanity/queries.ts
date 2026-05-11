@@ -1,44 +1,52 @@
 import { groq } from "next-sanity";
 
-/** Jusqu’à 7 membres pour le réseau vitrine */
-export const membersWithRecentNodesQuery = groq`
-  *[_type == "member"] | order(name asc)[0...7] {
-    _id,
-    name,
-    "slug": slug.current,
-    email,
-    bio,
-    avatar,
-    links,
-    "recentNodes": *[_type == "nodeContent" && author._ref == ^._id] | order(_updatedAt desc)[0...3] {
-      _id,
-      title,
-      _updatedAt,
-      tags
-    }
-  }
+const AUTHOR = "author->{ _id, name, bio, avatar }";
+
+export const homeArtworksQuery = groq`*[_type == "artwork"] | order(_createdAt desc)[0...12] {
+  _id,
+  title,
+  "slug": slug.current,
+  mainImage,
+  "mainVideoUrl": mainVideo.asset->url,
+  description,
+  ${AUTHOR}
+}`;
+
+export const homeWritingsQuery = groq`*[_type == "writing"] | order(_createdAt desc)[0...6] {
+  _id,
+  title,
+  "slug": slug.current,
+  heroIllustration,
+  "previewText": pt::text(content),
+  ${AUTHOR}
+}`;
+
+export const artworkSlugsQuery = groq`
+  *[_type == "artwork" && defined(slug.current)]{"slug": slug.current}
 `;
 
-export const memberSlugsQuery = groq`
-  *[_type == "member" && defined(slug.current)]{"slug": slug.current}
+export const writingSlugsQuery = groq`
+  *[_type == "writing" && defined(slug.current)]{"slug": slug.current}
 `;
 
-export const memberBySlugQuery = groq`
-  *[_type == "member" && slug.current == $slug][0] {
-    _id,
-    name,
-    "slug": slug.current,
-    email,
-    bio,
-    avatar,
-    links,
-    "nodes": *[_type == "nodeContent" && author._ref == ^._id] | order(_updatedAt desc) {
-      _id,
-      title,
-      content,
-      mainImage,
-      tags,
-      _updatedAt
-    }
-  }
-`;
+export const artworkBySlugQuery = groq`*[_type == "artwork" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  mainImage,
+  "mainVideoUrl": mainVideo.asset->url,
+  gallery,
+  description,
+  _createdAt,
+  ${AUTHOR}
+}`;
+
+export const writingBySlugQuery = groq`*[_type == "writing" && slug.current == $slug][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  heroIllustration,
+  content,
+  _createdAt,
+  ${AUTHOR}
+}`;

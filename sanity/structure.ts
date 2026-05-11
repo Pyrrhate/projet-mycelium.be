@@ -1,31 +1,45 @@
 import type { StructureResolver } from "sanity/structure";
 
-/**
- * Filtrage par membre : chaque collaborateur retrouve ses nœuds
- * via « Nœuds par membre » → choix du document membre.
- */
 export const myceliumStructure: StructureResolver = (S) =>
   S.list()
-    .title("Contenu")
+    .title("Mycélium")
     .items([
       S.listItem()
         .title("Membres")
         .schemaType("member")
-        .child(S.documentTypeList("member").title("Tous les membres")),
-      S.listItem()
-        .title("Nœuds de contenu")
-        .schemaType("nodeContent")
-        .child(S.documentTypeList("nodeContent").title("Tous les nœuds")),
+        .child(S.documentTypeList("member").title("Membres")),
       S.divider(),
       S.listItem()
-        .title("Nœuds par membre")
+        .title("Réalisations")
+        .schemaType("artwork")
+        .child(S.documentTypeList("artwork").title("Toutes les réalisations")),
+      S.listItem()
+        .title("Écrits")
+        .schemaType("writing")
+        .child(S.documentTypeList("writing").title("Tous les écrits")),
+      S.divider(),
+      S.listItem()
+        .title("Réalisations par membre")
         .child(
           S.documentTypeList("member")
             .title("Choisir un membre")
             .child((memberId) =>
               S.documentList()
-                .title("Nœuds liés à ce membre")
-                .filter('_type == "nodeContent" && author._ref == $memberId')
+                .title("Réalisations liées")
+                .filter('_type == "artwork" && author._ref == $memberId')
+                .params({ memberId: String(memberId) })
+                .apiVersion("2024-01-01"),
+            ),
+        ),
+      S.listItem()
+        .title("Écrits par membre")
+        .child(
+          S.documentTypeList("member")
+            .title("Choisir un membre")
+            .child((memberId) =>
+              S.documentList()
+                .title("Écrits liés")
+                .filter('_type == "writing" && author._ref == $memberId')
                 .params({ memberId: String(memberId) })
                 .apiVersion("2024-01-01"),
             ),

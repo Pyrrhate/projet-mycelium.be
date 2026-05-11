@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Projet Mycélium",
   },
   description:
-    "Vitrine immersive du collectif Mycélium — réseau vivant, biomimétisme et collaboration.",
+    "Espace d’exposition du collectif Mycélium — réalisations visuelles et écrits.",
   metadataBase: new URL("https://projet-mycelium.be"),
 };
 
