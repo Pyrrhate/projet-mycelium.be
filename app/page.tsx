@@ -1,6 +1,7 @@
 import { AgendaSection } from "@/components/home/AgendaSection";
 import { BilletsFlux } from "@/components/home/BilletsFlux";
 import { InformelHero } from "@/components/home/InformelHero";
+import { DEMO_BILLETS } from "@/lib/home/demoBillets";
 import { getClient } from "@/lib/sanity/client";
 import {
   billetsFluxQuery,
@@ -28,11 +29,13 @@ export default async function Home() {
     }
   }
 
+  const fluxBillets = billets.length > 0 ? billets : DEMO_BILLETS;
+
   return (
     <main className="relative z-10 flex min-h-screen flex-col">
       <InformelHero />
       <AgendaSection events={events} />
-      <BilletsFlux billets={billets} />
+      <BilletsFlux billets={fluxBillets} />
       <footer className="px-8 py-16 text-center text-sm text-[color:var(--text-subtle)] md:px-14 md:py-20">
         <p>Projet Mycélium — collectif & vitrine.</p>
       </footer>

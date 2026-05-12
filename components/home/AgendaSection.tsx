@@ -25,28 +25,34 @@ function formatWhen(iso: string) {
 }
 
 export function AgendaSection({ events }: Props) {
+  const hasEvents = events.length > 0;
+
   return (
     <section
       id="agenda"
       className="relative z-10 scroll-mt-8 px-6 py-20 md:px-14 md:py-24"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className={`mx-auto max-w-6xl ${!hasEvents ? "text-center" : ""}`}>
         <p className="font-display text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--accent-mint)]">
           Agenda
         </p>
         <h2 className="font-display mt-3 max-w-xl text-3xl font-semibold tracking-tight text-[color:var(--text-primary)] md:text-4xl">
           Expositions & rencontres
         </h2>
-        <p className="mt-4 max-w-2xl text-[color:var(--text-muted)]">
-          Prochaines dates du collectif — à afficher, partager, prolonger.
-        </p>
+        {hasEvents ? (
+          <p className="mt-4 max-w-2xl text-[color:var(--text-muted)]">
+            Prochaines dates du collectif — à afficher, partager, prolonger.
+          </p>
+        ) : null}
       </div>
 
-      {events.length === 0 ? (
-        <p className="mx-auto mt-14 max-w-6xl text-[color:var(--text-subtle)]">
-          Aucune date à venir pour l’instant. Les événements publiés dans Sanity
-          apparaîtront ici.
-        </p>
+      {!hasEvents ? (
+        <div className="mx-auto mt-20 max-w-lg px-4">
+          <p className="text-center font-display text-lg leading-relaxed text-[color:var(--text-muted)] md:text-xl">
+            Le réseau se repose. Aucune ramification n&apos;est prévue pour
+            l&apos;instant.
+          </p>
+        </div>
       ) : (
         <div className="mx-auto mt-14 flex max-w-6xl gap-6 overflow-x-auto pb-4 md:grid md:grid-cols-3 md:overflow-visible md:pb-0 md:pl-0 [scrollbar-width:thin]">
           {events.map((ev, i) => {
@@ -100,10 +106,12 @@ export function AgendaSection({ events }: Props) {
         </div>
       )}
 
-      <div className="mx-auto mt-12 max-w-6xl text-center md:text-left">
+      <div
+        className={`mx-auto mt-12 max-w-6xl text-center md:text-left ${!hasEvents ? "pt-4" : ""}`}
+      >
         <Link
           href="#flux"
-          className="text-sm font-medium text-[color:var(--accent-mint)] hover:underline"
+          className="text-sm font-medium text-[color:var(--accent-mint)] transition-colors duration-300 hover:text-[color:var(--accent-spring)] hover:underline"
         >
           Voir le flux du collectif ↓
         </Link>

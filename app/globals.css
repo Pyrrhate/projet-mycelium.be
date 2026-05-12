@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Toile continue : sous-bois / terre — profondeur sans blocs plats */
 :root {
   --canvas-deep: #060908;

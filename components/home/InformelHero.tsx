@@ -5,6 +5,9 @@ import Link from "next/link";
 
 const MINT = "rgba(158, 217, 190, 0.5)";
 
+const HERO_BODY =
+  "Nous explorons ensemble des expositions, rencontres et un flux d’images et de mots — sans cloisonner la création. Le collectif est un territoire commun où l’art se nourrit de présence, de partage et de fragments vivants.";
+
 /** Vitrine typographique du collectif — prolonge la toile globale sans fond en « bloc ». */
 export function InformelHero() {
   const reduceMotion = useReducedMotion();
@@ -77,8 +80,7 @@ export function InformelHero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.65, duration: 0.85 }}
         >
-          Nous explorons ensemble expositions, rencontres et un flux d’images et
-          de mots — sans cloisonner la création.
+          {HERO_BODY}
         </motion.p>
 
         <motion.div
@@ -89,13 +91,13 @@ export function InformelHero() {
         >
           <Link
             href="#agenda"
-            className="rounded-full border border-[color:var(--accent-mint)]/35 bg-[color:var(--accent-mint)]/8 px-8 py-3.5 text-center text-sm font-medium text-[color:var(--text-primary)] backdrop-blur-[2px] transition hover:border-[color:var(--accent-spring)]/45 hover:bg-[color:var(--accent-mint)]/12"
+            className="rounded-full border border-[color:var(--accent-mint)]/35 bg-[color:var(--accent-mint)]/8 px-8 py-3.5 text-center text-sm font-medium text-[color:var(--text-primary)] backdrop-blur-[2px] transition-all duration-300 ease-out hover:scale-[1.02] hover:border-[color:var(--accent-spring)]/50 hover:bg-[color:var(--accent-mint)]/14 hover:shadow-lg hover:shadow-[color:var(--accent-mint)]/15 active:scale-[0.98]"
           >
             Agenda
           </Link>
           <Link
             href="#flux"
-            className="rounded-full border border-white/12 px-8 py-3.5 text-center text-sm font-medium text-[color:var(--text-muted)] transition hover:border-white/22 hover:text-[color:var(--text-primary)]"
+            className="rounded-full border border-white/12 px-8 py-3.5 text-center text-sm font-medium text-[color:var(--text-muted)] transition-all duration-300 ease-out hover:scale-[1.02] hover:border-white/25 hover:bg-white/[0.05] hover:text-[color:var(--text-primary)] active:scale-[0.98]"
           >
             Le flux
           </Link>

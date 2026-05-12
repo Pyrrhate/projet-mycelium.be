@@ -66,6 +66,15 @@ export type BilletFluxItem = {
   } | null;
   firstVideo?: { url: string; caption?: string } | null;
   contentLength?: number;
+  /** Démonstration locale : pas de lien vers une page billet */
+  isStaticDemo?: boolean;
+  /** Force la variante d’affichage (ex. jeux d’exemple en dur) */
+  previewLayout?: FluxVariant;
+  /** Image distante pour démos sans asset Sanity */
+  demoImageUrl?: string | null;
+  demoImageAlt?: string | null;
+  /** Vidéo intégrée pour démo (YouTube / Vimeo / direct) */
+  demoEmbedVideoUrl?: string | null;
 };
 
 export type BilletDetail = {
